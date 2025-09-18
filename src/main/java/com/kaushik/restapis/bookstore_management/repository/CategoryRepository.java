@@ -18,7 +18,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     // Check if category exists by name (case insensitive)
     boolean existsByNameIgnoreCase(String name);
 
-    // Find category by name (case insensitive) - ADD THIS METHOD
+    // Find category by name (case insensitive) - ADD THIS IF MISSING
     Optional<Category> findByNameIgnoreCase(String name);
 
     // Find categories by name containing (case insensitive)
