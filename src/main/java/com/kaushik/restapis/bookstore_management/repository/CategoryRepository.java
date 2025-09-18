@@ -18,7 +18,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     // Check if category exists by name (case insensitive)
     boolean existsByNameIgnoreCase(String name);
 
-    // Find category by name (case insensitive) - ADD THIS IF MISSING
+    // Find category by name (case insensitive)
     Optional<Category> findByNameIgnoreCase(String name);
 
     // Find categories by name containing (case insensitive)
@@ -30,11 +30,3 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query("SELECT DISTINCT c FROM Category c JOIN c.books b GROUP BY c.id HAVING COUNT(b) > :bookCount")
     List<Category> findCategoriesWithBooks(@Param("bookCount") Long bookCount);
 }
-
-
-/*Selects unique Category entities 
-    From the Category table (aliased as 'c')
-    Joins with the books collection in Category entity (aliased as 'b')
-    Groups results by category ID
-    Filters groups where the count of books is greater
- */

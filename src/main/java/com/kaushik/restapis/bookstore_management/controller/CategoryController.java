@@ -32,84 +32,49 @@ public class CategoryController {
     // Get all categories
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
-        try {
-            List<Category> categories = categoryService.getAllCategories();
-            return ResponseEntity.ok(categories);
-        } catch (Exception e) {
-            e.printStackTrace(); // This will show in console logs
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        List<Category> categories = categoryService.getAllCategories();
+        return ResponseEntity.ok(categories);
     }
 
     // Get categories with pagination
     @GetMapping("/paginated")
     public ResponseEntity<Page<Category>> getAllCategories(Pageable pageable) {
-        try {
-            Page<Category> categories = categoryService.getAllCategories(pageable);
-            return ResponseEntity.ok(categories);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        Page<Category> categories = categoryService.getAllCategories(pageable);
+        return ResponseEntity.ok(categories);
     }
 
     // Get category by ID
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
-        try {
-            Category category = categoryService.getCategoryById(id);
-            return ResponseEntity.ok(category);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        Category category = categoryService.getCategoryById(id);
+        return ResponseEntity.ok(category);
     }
 
     // Create new category
     @PostMapping
     public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category) {
-        try {
-            Category savedCategory = categoryService.createCategory(category);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        Category savedCategory = categoryService.createCategory(category);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
 
     // Update category
     @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Long id, @Valid @RequestBody Category categoryDetails) {
-        try {
-            Category updatedCategory = categoryService.updateCategory(id, categoryDetails);
-            return ResponseEntity.ok(updatedCategory);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        Category updatedCategory = categoryService.updateCategory(id, categoryDetails);
+        return ResponseEntity.ok(updatedCategory);
     }
 
     // Delete category
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-        try {
-            categoryService.deleteCategory(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        categoryService.deleteCategory(id);
+        return ResponseEntity.noContent().build();
     }
 
     // Search categories by name
     @GetMapping("/search")
     public ResponseEntity<List<Category>> searchCategories(@RequestParam String name) {
-        try {
-            List<Category> categories = categoryService.searchCategoriesByName(name);
-            return ResponseEntity.ok(categories);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        List<Category> categories = categoryService.searchCategoriesByName(name);
+        return ResponseEntity.ok(categories);
     }
 }
