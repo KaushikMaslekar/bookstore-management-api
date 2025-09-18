@@ -215,4 +215,9 @@ public class BookService {
         dto.setCategoryId(book.getCategory().getId());
         return dto;
     }
+
+    public BookDTO getBookById(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBookById'");
+    }
 }
