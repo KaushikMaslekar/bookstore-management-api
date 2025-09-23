@@ -35,14 +35,14 @@ public class AuthorController {
     private AuthorService authorService;
 
     // Create a new author
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Author> createAuthor(@Valid @RequestBody Author author) {
         Author savedAuthor = authorService.createAuthor(author);
         return new ResponseEntity<>(savedAuthor, HttpStatus.CREATED);
     }
 
     // Get all authors
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Author>> getAllAuthors(
             @RequestParam(required = false) String search,
             @RequestParam(required = false) String nationality,

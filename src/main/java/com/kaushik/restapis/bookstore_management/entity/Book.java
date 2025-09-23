@@ -59,12 +59,12 @@ public class Book {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("author-books")
     private Author author;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("category-books")
     private Category category;
 
     @Size(max = 2000, message = "Description cannot exceed 2000 characters")

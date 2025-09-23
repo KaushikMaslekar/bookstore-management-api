@@ -216,8 +216,10 @@ public class BookService {
         return dto;
     }
 
+    // Get book by id (returns DTO)
+    @Transactional(readOnly = true)
     public BookDTO getBookById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBookById'");
+        Book book = getBookEntityById(id);
+        return convertToDTO(book);
     }
 }
