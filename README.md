@@ -56,18 +56,21 @@ src/main/java/com/kaushik/restapis/bookstore_management/
 ## 🗄️ Database Schema
 
 ### Authors
+
 - id (Primary Key)
 - name (Unique, Required)
 - email (Optional)
 - biography (Optional)
 - nationality (Optional)
 
-### Categories  
+### Categories
+
 - id (Primary Key)
 - name (Unique, Required)
 - description (Optional)
 
 ### Books
+
 - id (Primary Key)
 - title (Required)
 - isbn (Unique, Required)
@@ -83,6 +86,7 @@ src/main/java/com/kaushik/restapis/bookstore_management/
 ## 🔗 API Endpoints
 
 ### Authors API
+
 ```
 POST   /api/authors/create           # Create new author
 GET    /api/authors/all              # Get all authors
@@ -93,6 +97,7 @@ GET    /api/authors/search?name=     # Search authors
 ```
 
 ### Categories API
+
 ```
 POST   /api/categories               # Create new category
 GET    /api/categories               # Get all categories
@@ -103,6 +108,7 @@ GET    /api/categories/search?name=  # Search categories
 ```
 
 ### Books API
+
 ```
 POST   /api/books/create                    # Create new book
 GET    /api/books                           # Get all books
@@ -119,6 +125,7 @@ PATCH  /api/books/{id}/stock                # Update book stock
 ## 🚦 Getting Started
 
 ### Prerequisites
+
 - Java 21 or higher
 - MySQL 8.0
 - Maven 3.6+
@@ -126,12 +133,14 @@ PATCH  /api/books/{id}/stock                # Update book stock
 ### Installation
 
 1. **Clone the repository**
+
 ```bash
 git clone https://github.com/KaushikMaslekar/bookstore-management-api.git
 cd bookstore-management-api
 ```
 
 2. **Setup MySQL Database**
+
 ```sql
 CREATE DATABASE bookstore;
 CREATE USER 'root'@'localhost' IDENTIFIED BY 'your_password';
@@ -139,6 +148,7 @@ GRANT ALL PRIVILEGES ON bookstore.* TO 'root'@'localhost';
 ```
 
 3. **Configure Application Properties**
+
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/bookstore
 spring.datasource.username=root
@@ -148,17 +158,20 @@ spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
 ```
 
 4. **Run the Application**
+
 ```bash
 ./mvnw spring-boot:run
 ```
 
 5. **Access the API**
+
 - Base URL: `http://localhost:8080`
 - Test endpoint: `GET http://localhost:8080/api/test`
 
 ## 📝 Sample API Usage
 
 ### Create Author
+
 ```json
 POST /api/authors/create
 {
@@ -169,6 +182,7 @@ POST /api/authors/create
 ```
 
 ### Create Category
+
 ```json
 POST /api/categories
 {
@@ -178,6 +192,7 @@ POST /api/categories
 ```
 
 ### Create Book
+
 ```json
 POST /api/books/create
 {
@@ -197,16 +212,19 @@ POST /api/books/create
 ## 🔍 Advanced Features
 
 ### Pagination & Sorting
+
 ```
 GET /api/books?page=0&size=10&sortBy=title&sortDir=asc
 ```
 
 ### Filtering
+
 ```
 GET /api/books?authorId=1&categoryId=2&minPrice=10&maxPrice=50
 ```
 
 ### Search
+
 ```
 GET /api/authors/search?name=Rowling
 GET /api/books/search?title=Harry
@@ -237,6 +255,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 **Kaushik Maslekar**
+
 - GitHub: [@KaushikMaslekar](https://github.com/KaushikMaslekar)
 
 ## 🙏 Acknowledgments
