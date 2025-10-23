@@ -46,13 +46,13 @@ public class AuthorService {
 
     //Get author by id
     @Transactional(readOnly = true)
-    public Author getAuthorById(Long id) {
+    public Author getAuthorById(String id) {
         return authorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Author with id " + id + " not found"));
     }
 
     //Update Author
-    public Author updateAuthor(Long id, Author updatedAuthor) {
+    public Author updateAuthor(String id, Author updatedAuthor) {
         Author author = getAuthorById(id);
 
         // Check for duplicate name (excluding current author)
@@ -69,7 +69,7 @@ public class AuthorService {
     }
 
     //Delete Author 
-    public void deleteAuthor(Long id) {
+    public void deleteAuthor(String id) {
         Author author = getAuthorById(id);
         authorRepository.delete(author);
     }

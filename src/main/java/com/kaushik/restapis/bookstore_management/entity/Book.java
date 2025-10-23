@@ -3,72 +3,63 @@ package com.kaushik.restapis.bookstore_management.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-@Entity
-@Table(name = "books")
+@Document(collection = "books")
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column(name = "title", nullable = false)
+    @NotNull
+    @Field("title")
     private String title;
 
-    @Column(name = "isbn", unique = true, nullable = false)
+    @NotNull
+    @Indexed(unique = true)
+    @Field("isbn")
     private String isbn;
 
-    @Column(name = "publication_year")
+    @Field("publication_year")
     private Integer publicationYear;
 
-    @Column(name = "price", nullable = false)
+    @NotNull
+    @Field("price")
     private BigDecimal price;
 
     @NotNull(message = "Stock quantity is required")
     @Min(value = 0, message = "Stock quantity cannot be negative")
-    @Column(name = "stock_quantity", nullable = false)
+    @Field("stock_quantity")
     private Integer stockQuantity;
 
-    @Column(name = "pages")
+    @Field("pages")
     private Integer pages;
 
-    @Column(name = "language")
+    @Field("language")
     private String language;
 
-    @Column(name = "created_at")
+    @Field("created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Field("updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", nullable = false)
-    @JsonBackReference("author-books")
+    @DBRef
     private Author author;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id", nullable = false)
-    @JsonBackReference("category-books")
+    @DBRef
     private Category category;
 
     @Size(max = 2000, message = "Description cannot exceed 2000 characters")
-    @Column(name = "description")
+    @Field("description")
     private String description;
 
     public Book() {
@@ -84,23 +75,21 @@ public class Book {
         this.category = category;
     }
 
-    @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
-    @PreUpdate
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
 
     // Getters and Setters
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

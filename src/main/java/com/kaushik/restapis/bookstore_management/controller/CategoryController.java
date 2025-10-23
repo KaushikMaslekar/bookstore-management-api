@@ -45,7 +45,7 @@ public class CategoryController {
 
     // Get category by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
+    public ResponseEntity<Category> getCategoryById(@PathVariable String id) {
         Category category = categoryService.getCategoryById(id);
         return ResponseEntity.ok(category);
     }
@@ -59,14 +59,14 @@ public class CategoryController {
 
     // Update category
     @PutMapping("/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @Valid @RequestBody Category categoryDetails) {
+    public ResponseEntity<Category> updateCategory(@PathVariable String id, @Valid @RequestBody Category categoryDetails) {
         Category updatedCategory = categoryService.updateCategory(id, categoryDetails);
         return ResponseEntity.ok(updatedCategory);
     }
 
     // Delete category
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }

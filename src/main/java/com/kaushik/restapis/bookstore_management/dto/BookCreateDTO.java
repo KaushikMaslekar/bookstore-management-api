@@ -34,10 +34,10 @@ public class BookCreateDTO {
     private String language;
 
     @NotNull(message = "Author ID is required")
-    private Long authorId;
+    private String authorId;
 
     @NotNull(message = "Category ID is required")
-    private Long categoryId;
+    private String categoryId;
 
     public BookCreateDTO() {
     }
@@ -107,19 +107,19 @@ public class BookCreateDTO {
         this.language = language;
     }
 
-    public Long getAuthorId() {
+    public String getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Long authorId) {
+    public void setAuthorId(String authorId) {
         this.authorId = authorId;
     }
 
-    public Long getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Long categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 }

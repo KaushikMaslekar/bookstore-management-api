@@ -6,13 +6,12 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import com.kaushik.restapis.bookstore_management.entity.Book;
 
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface BookRepository extends MongoRepository<Book, String> {
 
     //Find by International Standard Book Number
     Optional<Book> findByIsbn(String isbn);
@@ -24,16 +23,16 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Page<Book> findByTitleContainingIgnoreCase(String title, Pageable pageable);
 
     //Find by author id
-    List<Book> findByAuthorId(Long authorId);
+    List<Book> findByAuthorId(String authorId);
 
     //Find by author id with pagination
-    Page<Book> findByAuthorId(Long authorId, Pageable pageable);
+    Page<Book> findByAuthorId(String authorId, Pageable pageable);
 
     //Find by category id
-    List<Book> findByCategoryId(Long categoryId);
+    List<Book> findByCategoryId(String categoryId);
 
     //Find by category id with pagination
-    Page<Book> findByCategoryId(Long categoryId, Pageable pageable);
+    Page<Book> findByCategoryId(String categoryId, Pageable pageable);
 
     //Find by price range
     List<Book> findByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice);
@@ -45,17 +44,18 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findByStockQuantityLessThanEqual(Integer stockQuantity);
 
     //Complex query for advanced search
-    @Query("SELECT b FROM Book b WHERE "
-            + "(:title IS NULL OR LOWER(b.title) LIKE LOWER(CONCAT('%', :title, '%'))) AND "
-            + "(:authorId IS NULL OR b.author.id = :authorId) AND "
-            + "(:categoryId IS NULL OR b.category.id = :categoryId) AND "
-            + "(:minPrice IS NULL OR b.price >= :minPrice) AND "
-            + "(:maxPrice IS NULL OR b.price <= :maxPrice)")
-    Page<Book> searchBooks(@Param("title") String title,
-            @Param("authorId") Long authorId,
-            @Param("categoryId") Long categoryId,
-            @Param("minPrice") BigDecimal minPrice,
-            @Param("maxPrice") BigDecimal maxPrice,
+    @Query("{$and: ["
+            + "{$or: [{title: {$regex: ?0, $options: 'i'}}, {?0: null}]},"
+            + "{$or: [{'author.$id': ?1}, {?1: null}]},"
+            + "{$or: [{'category.$id': ?2}, {?2: null}]},"
+            + "{$or: [{price: {$gte: ?3}}, {?3: null}]},"
+            + "{$or: [{price: {$lte: ?4}}, {?4: null}]}"
+            + "]}")
+    Page<Book> searchBooks(String title,
+            String authorId,
+            String categoryId,
+            BigDecimal minPrice,
+            BigDecimal maxPrice,
             Pageable pageable);
 
     //Check book existence by isbn 

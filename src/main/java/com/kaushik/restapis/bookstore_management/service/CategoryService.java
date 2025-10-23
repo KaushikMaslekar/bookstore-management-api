@@ -42,13 +42,13 @@ public class CategoryService {
 
     //Get category by id
     @Transactional(readOnly = true)
-    public Category getCategoryById(Long id) {
+    public Category getCategoryById(String id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found with id " + id));
     }
 
     //update category
-    public Category updateCategory(Long id, Category categoryDetails) {
+    public Category updateCategory(String id, Category categoryDetails) {
         Category category = getCategoryById(id);
         //check if category with same name exists   
         Optional<Category> existingCategory = categoryRepository.findByNameIgnoreCase(categoryDetails.getName());
@@ -62,7 +62,7 @@ public class CategoryService {
     }
 
     //Delete Category
-    public void deleteCategory(Long id) {
+    public void deleteCategory(String id) {
         Category category = getCategoryById(id);
         categoryRepository.delete(category); //categoryRepository has delete method because it extends JpaRepository and it interact with database
     }

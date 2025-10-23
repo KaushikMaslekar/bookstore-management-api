@@ -38,7 +38,7 @@ public class BookController {
     private BookService bookService;
 
     // Create a new book
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<BookDTO> createBook(@Valid @RequestBody BookCreateDTO bookCreateDTO) {
         BookDTO savedBook = bookService.createBook(bookCreateDTO);
         return new ResponseEntity<>(savedBook, HttpStatus.CREATED);
@@ -48,8 +48,8 @@ public class BookController {
     @GetMapping
     public ResponseEntity<List<BookDTO>> getAllBooks(
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) Long authorId,
-            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) String authorId,
+            @RequestParam(required = false) String categoryId,
             @RequestParam(required = false) BigDecimal minPrice,
             @RequestParam(required = false) BigDecimal maxPrice,
             @RequestParam(defaultValue = "0") int page,
@@ -77,7 +77,7 @@ public class BookController {
 
     // Get book by id
     @GetMapping("/{id}")
-    public ResponseEntity<BookDTO> getBookById(@PathVariable Long id) {
+    public ResponseEntity<BookDTO> getBookById(@PathVariable String id) {
         BookDTO book = bookService.getBookById(id);
         return ResponseEntity.ok(book);
     }
@@ -91,7 +91,7 @@ public class BookController {
 
     // Update book
     @PutMapping("/{id}")
-    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id,
+    public ResponseEntity<BookDTO> updateBook(@PathVariable String id,
             @Valid @RequestBody BookCreateDTO bookUpdateDTO) {
         BookDTO updatedBook = bookService.updateBook(id, bookUpdateDTO);
         return ResponseEntity.ok(updatedBook);
@@ -99,7 +99,7 @@ public class BookController {
 
     // Delete book
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBook(@PathVariable String id) {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
     }
@@ -113,14 +113,14 @@ public class BookController {
 
     // Get books by author
     @GetMapping("/author/{authorId}")
-    public ResponseEntity<List<BookDTO>> getBooksByAuthor(@PathVariable Long authorId) {
+    public ResponseEntity<List<BookDTO>> getBooksByAuthor(@PathVariable String authorId) {
         List<BookDTO> books = bookService.getBooksByAuthor(authorId);
         return ResponseEntity.ok(books);
     }
 
     // Get books by category
     @GetMapping("/category/{categoryId}")
-    public ResponseEntity<List<BookDTO>> getBooksByCategory(@PathVariable Long categoryId) {
+    public ResponseEntity<List<BookDTO>> getBooksByCategory(@PathVariable String categoryId) {
         List<BookDTO> books = bookService.getBooksByCategory(categoryId);
         return ResponseEntity.ok(books);
     }
@@ -143,7 +143,7 @@ public class BookController {
 
     // Update book stock
     @PatchMapping("/{id}/stock")
-    public ResponseEntity<BookDTO> updateBookStock(@PathVariable Long id,
+    public ResponseEntity<BookDTO> updateBookStock(@PathVariable String id,
             @RequestBody Map<String, Integer> stockData) {
         Integer newStock = stockData.get("stockQuantity");
         BookDTO updatedBook = bookService.updateBookStock(id, newStock);

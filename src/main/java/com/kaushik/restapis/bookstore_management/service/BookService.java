@@ -74,13 +74,13 @@ public class BookService {
 
     // Get book entity by id (for internal use)
     @Transactional(readOnly = true)
-    public Book getBookEntityById(Long id) {
+    public Book getBookEntityById(String id) {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
     }
 
     // Update book
-    public BookDTO updateBook(Long id, BookCreateDTO bookUpdateDTO) {
+    public BookDTO updateBook(String id, BookCreateDTO bookUpdateDTO) {
         Book book = getBookEntityById(id);
 
         // Check if new ISBN conflicts with existing book (excluding current one)
@@ -110,7 +110,7 @@ public class BookService {
     }
 
     // Delete book
-    public void deleteBook(Long id) {
+    public void deleteBook(String id) {
         Book book = getBookEntityById(id);
         bookRepository.delete(book);
     }
@@ -131,28 +131,28 @@ public class BookService {
 
     // Get books by author
     @Transactional(readOnly = true)
-    public List<BookDTO> getBooksByAuthor(Long authorId) {
+    public List<BookDTO> getBooksByAuthor(String authorId) {
         List<Book> books = bookRepository.findByAuthorId(authorId);
         return books.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     // Get books by author with pagination
     @Transactional(readOnly = true)
-    public Page<BookDTO> getBooksByAuthor(Long authorId, Pageable pageable) {
+    public Page<BookDTO> getBooksByAuthor(String authorId, Pageable pageable) {
         Page<Book> books = bookRepository.findByAuthorId(authorId, pageable);
         return books.map(this::convertToDTO);
     }
 
     // Get books by category
     @Transactional(readOnly = true)
-    public List<BookDTO> getBooksByCategory(Long categoryId) {
+    public List<BookDTO> getBooksByCategory(String categoryId) {
         List<Book> books = bookRepository.findByCategoryId(categoryId);
         return books.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     // Get books by category with pagination
     @Transactional(readOnly = true)
-    public Page<BookDTO> getBooksByCategory(Long categoryId, Pageable pageable) {
+    public Page<BookDTO> getBooksByCategory(String categoryId, Pageable pageable) {
         Page<Book> books = bookRepository.findByCategoryId(categoryId, pageable);
         return books.map(this::convertToDTO);
     }
@@ -173,14 +173,14 @@ public class BookService {
 
     // Complex search
     @Transactional(readOnly = true)
-    public Page<BookDTO> searchBooks(String title, Long authorId, Long categoryId,
+    public Page<BookDTO> searchBooks(String title, String authorId, String categoryId,
             BigDecimal minPrice, BigDecimal maxPrice, Pageable pageable) {
         Page<Book> books = bookRepository.searchBooks(title, authorId, categoryId, minPrice, maxPrice, pageable);
         return books.map(this::convertToDTO);
     }
 
     // Update stock quantity
-    public BookDTO updateBookStock(Long id, Integer newStockQuantity) {
+    public BookDTO updateBookStock(String id, Integer newStockQuantity) {
         Book book = getBookEntityById(id);
         book.setStockQuantity(newStockQuantity);
         Book savedBook = bookRepository.save(book);
@@ -209,16 +209,27 @@ public class BookService {
         dto.setLanguage(book.getLanguage());
         dto.setCreatedAt(book.getCreatedAt());
         dto.setUpdatedAt(book.getUpdatedAt());
-        dto.setAuthorName(book.getAuthor().getName());
-        dto.setAuthorId(book.getAuthor().getId());
-        dto.setCategoryName(book.getCategory().getName());
-        dto.setCategoryId(book.getCategory().getId());
+        if (book.getAuthor() != null) {
+            dto.setAuthorName(book.getAuthor().getName());
+            dto.setAuthorId(book.getAuthor().getId());
+        } else {
+            dto.setAuthorName(null);
+            dto.setAuthorId(null);
+        }
+
+        if (book.getCategory() != null) {
+            dto.setCategoryName(book.getCategory().getName());
+            dto.setCategoryId(book.getCategory().getId());
+        } else {
+            dto.setCategoryName(null);
+            dto.setCategoryId(null);
+        }
         return dto;
     }
 
     // Get book by id (returns DTO)
     @Transactional(readOnly = true)
-    public BookDTO getBookById(Long id) {
+    public BookDTO getBookById(String id) {
         Book book = getBookEntityById(id);
         return convertToDTO(book);
     }

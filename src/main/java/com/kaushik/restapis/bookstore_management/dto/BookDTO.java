@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 public class BookDTO {
 
-    private Long id;
+    private String id;
     private String title;
     private String isbn;
     private String description;
@@ -17,18 +17,18 @@ public class BookDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String authorName;
-    private Long authorId;
+    private String authorId;
     private String categoryName;
-    private Long categoryId;
+    private String categoryId;
 
     public BookDTO() {
 
     }
 
-    public BookDTO(Long id, String title, String isbn, String description,
+    public BookDTO(String id, String title, String isbn, String description,
             BigDecimal price, Integer publicationYear, Integer stockQuantity,
             Integer pages, String language, LocalDateTime createdAt, LocalDateTime updatedAt,
-            String authorName, Long authorId, String categoryName, Long categoryId
+            String authorName, String authorId, String categoryName, String categoryId
     ) {
         this.id = id;
         this.title = title;
@@ -48,11 +48,11 @@ public class BookDTO {
     }
 
     //Getters and Setters
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -144,11 +144,11 @@ public class BookDTO {
         this.authorName = authorName;
     }
 
-    public Long getAuthorId() {
+    public String getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(Long authorId) {
+    public void setAuthorId(String authorId) {
         this.authorId = authorId;
     }
 
@@ -160,11 +160,11 @@ public class BookDTO {
         this.categoryName = categoryName;
     }
 
-    public Long getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Long categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
