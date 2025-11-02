@@ -62,3 +62,12 @@ application-prod.properties
 application-dev.properties
 # But keep the template
 !application.properties.template
+
+# Environment files with API keys
+.env
+.env.local
+*.env.backup
+
+# Temporary test files
+temp_*.json
+temp_*.js
