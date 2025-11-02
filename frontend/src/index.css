@@ -164,6 +164,30 @@ body {
   letter-spacing: -0.5px;
 }
 
+/* Sidebar navigation styling */
+.sidebar-nav {
+  padding-left: 0;
+}
+
+.sidebar-nav .nav-link {
+  color: var(--dark-color);
+  background: transparent;
+}
+
+.sidebar-nav .nav-link:hover {
+  background: rgba(13, 110, 253, 0.06);
+  color: var(--primary-color);
+}
+
+.sidebar-nav .nav-link.bg-white {
+  background: white !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.sidebar-nav .nav-item + .nav-item {
+  margin-top: 6px;
+}
+
 /* Alert styling */
 .alert {
   border-radius: 12px;

@@ -3,9 +3,13 @@ import { Link, useLocation } from "react-router-dom";
 
 interface NavMenuProps {
   onClose?: () => void;
+  variant?: "horizontal" | "sidebar"; // horizontal (navbar) or sidebar (vertical nav)
 }
 
-export const NavMenu: React.FC<NavMenuProps> = ({ onClose }) => {
+export const NavMenu: React.FC<NavMenuProps> = ({
+  onClose,
+  variant = "horizontal",
+}) => {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
 
@@ -21,6 +25,30 @@ export const NavMenu: React.FC<NavMenuProps> = ({ onClose }) => {
       icon: "bi-plus-circle",
     },
   ];
+
+  if (variant === "sidebar") {
+    return (
+      <ul className="nav flex-column sidebar-nav">
+        {navItems.map((item) => (
+          <li className="nav-item mb-1" key={item.path}>
+            <Link
+              to={item.path}
+              className={`nav-link d-flex align-items-center px-3 py-2 rounded ${
+                isActive(item.path)
+                  ? "bg-white text-primary fw-semibold"
+                  : "text-dark"
+              }`}
+              onClick={onClose}
+              style={{ transition: "all 0.2s ease" }}
+            >
+              <i className={`bi ${item.icon} me-2`} aria-hidden />
+              <span>{item.label}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    );
+  }
 
   return (
     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">

@@ -58,6 +58,12 @@ public class Book {
     @DBRef
     private Category category;
 
+    @org.springframework.data.mongodb.core.mapping.Field("embedding")
+    private java.util.List<Double> embedding;
+
+    @org.springframework.data.mongodb.core.mapping.Field("embedding_updated_at")
+    private java.time.LocalDateTime embeddingUpdatedAt;
+
     @Size(max = 2000, message = "Description cannot exceed 2000 characters")
     @Field("description")
     private String description;
@@ -187,5 +193,21 @@ public class Book {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public java.util.List<Double> getEmbedding() {
+        return embedding;
+    }
+
+    public void setEmbedding(java.util.List<Double> embedding) {
+        this.embedding = embedding;
+    }
+
+    public java.time.LocalDateTime getEmbeddingUpdatedAt() {
+        return embeddingUpdatedAt;
+    }
+
+    public void setEmbeddingUpdatedAt(java.time.LocalDateTime embeddingUpdatedAt) {
+        this.embeddingUpdatedAt = embeddingUpdatedAt;
     }
 }

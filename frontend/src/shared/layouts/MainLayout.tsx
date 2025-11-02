@@ -44,8 +44,26 @@ export default function MainLayout() {
         }}
       >
         <div className="container">
-          <div className="fade-in">
-            <Outlet />
+          <div className="row">
+            {/* Sidebar for larger screens */}
+            <aside className="col-12 col-lg-3 mb-3 mb-lg-0">
+              <div className="card border-0 h-100">
+                <div className="card-body p-3">
+                  {/* Reuse NavMenu in sidebar variant */}
+                  <NavMenu
+                    onClose={() => setMobileOpen(false)}
+                    variant="sidebar"
+                  />
+                </div>
+              </div>
+            </aside>
+
+            {/* Main content area */}
+            <section className="col-12 col-lg-9">
+              <div className="fade-in">
+                <Outlet />
+              </div>
+            </section>
           </div>
         </div>
       </main>
