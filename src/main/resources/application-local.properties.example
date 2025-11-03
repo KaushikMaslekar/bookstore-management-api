@@ -1,0 +1,10 @@
+# Local development configuration
+# This file is gitignored and contains your actual API keys
+# Copy this file to application-local.properties and add your real keys
+
+# Hugging Face API Key (FREE - 30k requests/month)
+# Get your token at: https://huggingface.co/settings/tokens
+huggingface.api.key=YOUR_HUGGINGFACE_API_KEY_HERE
+
+# OpenAI API Key (Optional - for backup/alternative implementation)
+# openai.api.key=YOUR_OPENAI_API_KEY_HERE

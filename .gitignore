@@ -60,6 +60,7 @@ Thumbs.db
 # Application properties with sensitive data
 application-prod.properties
 application-dev.properties
+application-local.properties
 # But keep the template
 !application.properties.template
 
