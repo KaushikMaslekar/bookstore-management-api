@@ -19,7 +19,7 @@ A comprehensive RESTful API for managing a bookstore built with Spring Boot, MyS
 ## 🛠️ Technology Stack
 
 - **Framework**: Spring Boot 3.1.4
-- **Database**: MySQL 8.0
+- **Database**: MongoDB
 - **ORM**: JPA/Hibernate
 - **Build Tool**: Maven
 - **Java Version**: 21
@@ -127,7 +127,7 @@ PATCH  /api/books/{id}/stock                # Update book stock
 ### Prerequisites
 
 - Java 21 or higher
-- MySQL 8.0
+- MongoDB
 - Maven 3.6+
 
 ### Installation
