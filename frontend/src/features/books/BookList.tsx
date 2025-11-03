@@ -100,14 +100,32 @@ export const BookList: React.FC = () => {
         setSemanticError(null);
         const results = await aiService.semanticSearch(query, 20);
 
-        // Fetch full book details for each result
-        const bookIds = results.value.map((r) => r.bookId);
-        const booksPromises = bookIds.map((id) => bookService.getBookById(id));
-        const booksData = await Promise.all(booksPromises);
-
-        setSemanticResults(booksData);
+        // Check if results and value exist
+        if (
+          results &&
+          results.value &&
+          Array.isArray(results.value) &&
+          results.value.length > 0
+        ) {
+          // Fetch full book details for each result
+          const bookIds = results.value.map((r) => r.bookId);
+          const booksPromises = bookIds.map((id) =>
+            bookService.getBookById(id)
+          );
+          const booksData = await Promise.all(booksPromises);
+          setSemanticResults(booksData);
+        } else {
+          setSemanticResults([]);
+          setSemanticError(
+            "No books found matching your search. Try different keywords."
+          );
+        }
       } catch (err: any) {
-        setSemanticError(err.message || "Failed to perform semantic search");
+        console.error("Semantic search error:", err);
+        setSemanticError(
+          err.message ||
+            "Failed to perform semantic search. Please ensure the backend is running."
+        );
         setSemanticResults([]);
       } finally {
         setSemanticLoading(false);
