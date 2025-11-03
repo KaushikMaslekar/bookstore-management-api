@@ -166,6 +166,63 @@ export const categoryService = {
       .then((res) => res.data),
 };
 
+// AI Service
+export interface BookRecommendation {
+  bookId: string;
+  title: string;
+  score: number;
+}
+
+export interface RecommendationsResponse {
+  value: BookRecommendation[];
+  Count: number;
+}
+
+export interface SemanticSearchResult {
+  bookId: string;
+  title: string;
+  score: number;
+}
+
+export interface SemanticSearchResponse {
+  value: SemanticSearchResult[];
+  Count: number;
+}
+
+export const aiService = {
+  // Get book recommendations based on similarity
+  getRecommendations: (bookId: string, size: number = 6) =>
+    api
+      .get<RecommendationsResponse>(
+        `/ai/recommendations/book/${bookId}?size=${size}`
+      )
+      .then((res) => res.data),
+
+  // Semantic search - understands meaning, not just keywords
+  semanticSearch: (query: string, size: number = 10) =>
+    api
+      .get<SemanticSearchResponse>(
+        `/ai/semantic-search?q=${encodeURIComponent(query)}&size=${size}`
+      )
+      .then((res) => res.data),
+
+  // Recompute embeddings for all books
+  recomputeEmbeddings: (force: boolean = false) =>
+    api
+      .post<{ total: number; message: string; updated: number }>(
+        `/ai/embeddings/recompute?force=${force}`
+      )
+      .then((res) => res.data),
+
+  // Update embedding for a single book
+  updateBookEmbedding: (bookId: string) =>
+    api
+      .post<{ message: string; bookId: string }>(
+        `/ai/embeddings/book/${bookId}`
+      )
+      .then((res) => res.data),
+};
+
 // Error handling interceptor
 api.interceptors.response.use(
   (response) => response,

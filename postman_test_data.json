@@ -1,0 +1,240 @@
+{
+  "authors": [
+    {
+      "name": "Martin Fowler",
+      "biography": "British software developer, author, and international speaker on software development. Known for refactoring, microservices, and agile methodologies.",
+      "email": "martin@martinfowler.com",
+      "nationality": "British"
+    },
+    {
+      "name": "Joshua Bloch",
+      "biography": "American software engineer and author. Former Chief Java Architect at Google. Known for Effective Java and contributions to Java Collections Framework.",
+      "email": "joshua@example.com",
+      "nationality": "American"
+    },
+    {
+      "name": "Erich Gamma",
+      "biography": "Swiss computer scientist and co-author of Design Patterns. Lead developer of Eclipse and Microsoft Visual Studio Code.",
+      "email": "erich@example.com",
+      "nationality": "Swiss"
+    },
+    {
+      "name": "Kent Beck",
+      "biography": "American software engineer and creator of Extreme Programming and Test-Driven Development. Pioneer of agile software development.",
+      "email": "kent@example.com",
+      "nationality": "American"
+    },
+    {
+      "name": "Brian Kernighan",
+      "biography": "Canadian computer scientist who co-authored The C Programming Language with Dennis Ritchie. Professor at Princeton University.",
+      "email": "brian@example.com",
+      "nationality": "Canadian"
+    },
+    {
+      "name": "Bjarne Stroustrup",
+      "biography": "Danish computer scientist and creator of C++ programming language. Managing Director at Morgan Stanley and visiting professor at Columbia University.",
+      "email": "bjarne@example.com",
+      "nationality": "Danish"
+    },
+    {
+      "name": "Gayle Laakmann McDowell",
+      "biography": "Software engineer and author. Founder of CareerCup. Former engineer at Google, Microsoft, and Apple. Known for technical interview preparation books.",
+      "email": "gayle@example.com",
+      "nationality": "American"
+    },
+    {
+      "name": "Michael Feathers",
+      "biography": "American software consultant and author specializing in legacy code and agile development practices.",
+      "email": "michael@example.com",
+      "nationality": "American"
+    },
+    {
+      "name": "Sandi Metz",
+      "biography": "American software engineer, author, and international speaker. Known for object-oriented design and Ruby programming expertise.",
+      "email": "sandi@example.com",
+      "nationality": "American"
+    },
+    {
+      "name": "Steve McConnell",
+      "biography": "American software engineer and author. CEO of Construx Software. Known for Code Complete and software construction best practices.",
+      "email": "steve@example.com",
+      "nationality": "American"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Software Architecture",
+      "description": "Books about designing large-scale software systems, architectural patterns, and system design principles."
+    },
+    {
+      "name": "Object-Oriented Design",
+      "description": "Books covering OOP principles, design patterns, SOLID principles, and object-oriented programming best practices."
+    },
+    {
+      "name": "Testing & Quality Assurance",
+      "description": "Books about software testing, test-driven development, quality assurance, and writing maintainable test code."
+    },
+    {
+      "name": "Programming Languages",
+      "description": "Books focused on specific programming languages like Java, C, C++, and their advanced features."
+    },
+    {
+      "name": "Career Development",
+      "description": "Books about software engineering careers, technical interviews, coding challenges, and professional growth."
+    },
+    {
+      "name": "Legacy Code & Refactoring",
+      "description": "Books about working with existing codebases, refactoring techniques, and improving code quality."
+    },
+    {
+      "name": "Agile & Methodologies",
+      "description": "Books about agile development, extreme programming, scrum, and software development methodologies."
+    }
+  ],
+  "books": [
+    {
+      "title": "Refactoring: Improving the Design of Existing Code",
+      "isbn": "9780134757599",
+      "description": "Martin Fowler's guide to refactoring, improving code structure without changing external behavior. Covers code smells, refactoring techniques, and maintaining clean codebases. Essential for working with legacy systems.",
+      "price": 54.99,
+      "publicationYear": 2018,
+      "stockQuantity": 95,
+      "pages": 448,
+      "language": "English",
+      "authorName": "Martin Fowler",
+      "categoryName": "Legacy Code & Refactoring"
+    },
+    {
+      "title": "Effective Java",
+      "isbn": "9780134685991",
+      "description": "Joshua Bloch's definitive guide to Java programming best practices. Covers 90 rules covering effective Java patterns, generics, concurrency, serialization, and more. Must-read for serious Java developers.",
+      "price": 49.99,
+      "publicationYear": 2017,
+      "stockQuantity": 110,
+      "pages": 416,
+      "language": "English",
+      "authorName": "Joshua Bloch",
+      "categoryName": "Programming Languages"
+    },
+    {
+      "title": "Design Patterns: Elements of Reusable Object-Oriented Software",
+      "isbn": "9780201633610",
+      "description": "The Gang of Four classic that introduced 23 design patterns for object-oriented software. Covers creational, structural, and behavioral patterns. Foundation for modern software architecture.",
+      "price": 59.99,
+      "publicationYear": 1994,
+      "stockQuantity": 75,
+      "pages": 416,
+      "language": "English",
+      "authorName": "Erich Gamma",
+      "categoryName": "Object-Oriented Design"
+    },
+    {
+      "title": "Test Driven Development: By Example",
+      "isbn": "9780321146530",
+      "description": "Kent Beck's introduction to Test-Driven Development. Learn to write tests first, then code. Includes practical examples in Java and Python. Revolutionizes software development approach.",
+      "price": 44.99,
+      "publicationYear": 2002,
+      "stockQuantity": 88,
+      "pages": 240,
+      "language": "English",
+      "authorName": "Kent Beck",
+      "categoryName": "Testing & Quality Assurance"
+    },
+    {
+      "title": "The C Programming Language",
+      "isbn": "9780131103627",
+      "description": "The definitive guide to C programming by its creators. Known as K&R, this book covers C fundamentals, pointers, data structures, and Unix system programming. Classic reference for C developers.",
+      "price": 62.99,
+      "publicationYear": 1988,
+      "stockQuantity": 65,
+      "pages": 272,
+      "language": "English",
+      "authorName": "Brian Kernighan",
+      "categoryName": "Programming Languages"
+    },
+    {
+      "title": "The C++ Programming Language",
+      "isbn": "9780321563842",
+      "description": "Bjarne Stroustrup's comprehensive guide to C++ by the language's creator. Covers C++11 features, templates, STL, object-oriented programming, and modern C++ best practices.",
+      "price": 69.99,
+      "publicationYear": 2013,
+      "stockQuantity": 70,
+      "pages": 1376,
+      "language": "English",
+      "authorName": "Bjarne Stroustrup",
+      "categoryName": "Programming Languages"
+    },
+    {
+      "title": "Cracking the Coding Interview",
+      "isbn": "9780984782857",
+      "description": "The ultimate guide to technical interview preparation. 189 programming questions with solutions, covering data structures, algorithms, system design, and behavioral interviews. Essential for job seekers.",
+      "price": 39.99,
+      "publicationYear": 2015,
+      "stockQuantity": 200,
+      "pages": 708,
+      "language": "English",
+      "authorName": "Gayle Laakmann McDowell",
+      "categoryName": "Career Development"
+    },
+    {
+      "title": "Working Effectively with Legacy Code",
+      "isbn": "9780131177055",
+      "description": "Michael Feathers' guide to maintaining and improving legacy systems. Covers dependency breaking, testing legacy code, refactoring strategies, and working with code you didn't write.",
+      "price": 54.99,
+      "publicationYear": 2004,
+      "stockQuantity": 82,
+      "pages": 464,
+      "language": "English",
+      "authorName": "Michael Feathers",
+      "categoryName": "Legacy Code & Refactoring"
+    },
+    {
+      "title": "Practical Object-Oriented Design",
+      "isbn": "9780134456478",
+      "description": "Sandi Metz's guide to object-oriented design in Ruby. Covers SOLID principles, dependency management, testing, and creating flexible, maintainable applications. Applicable to any OO language.",
+      "price": 44.99,
+      "publicationYear": 2018,
+      "stockQuantity": 90,
+      "pages": 272,
+      "language": "English",
+      "authorName": "Sandi Metz",
+      "categoryName": "Object-Oriented Design"
+    },
+    {
+      "title": "Code Complete: A Practical Handbook of Software Construction",
+      "isbn": "9780735619678",
+      "description": "Steve McConnell's comprehensive guide to software construction. Covers coding techniques, debugging, testing, and software craftsmanship. One of the most influential programming books ever written.",
+      "price": 49.99,
+      "publicationYear": 2004,
+      "stockQuantity": 100,
+      "pages": 960,
+      "language": "English",
+      "authorName": "Steve McConnell",
+      "categoryName": "Software Engineering / Clean Code Practices"
+    },
+    {
+      "title": "Patterns of Enterprise Application Architecture",
+      "isbn": "9780321127426",
+      "description": "Martin Fowler's catalog of patterns for enterprise application development. Covers domain logic, data source, web presentation, distribution, and offline concurrency patterns.",
+      "price": 59.99,
+      "publicationYear": 2002,
+      "stockQuantity": 75,
+      "pages": 560,
+      "language": "English",
+      "authorName": "Martin Fowler",
+      "categoryName": "Software Architecture"
+    },
+    {
+      "title": "Extreme Programming Explained",
+      "isbn": "9780321278658",
+      "description": "Kent Beck's introduction to Extreme Programming methodology. Covers pair programming, test-driven development, continuous integration, and agile practices that revolutionized software development.",
+      "price": 44.99,
+      "publicationYear": 2004,
+      "stockQuantity": 68,
+      "pages": 224,
+      "language": "English",
+      "authorName": "Kent Beck",
+      "categoryName": "Agile & Methodologies"
+    }
+  ]
+}

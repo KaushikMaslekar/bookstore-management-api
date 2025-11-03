@@ -13,6 +13,8 @@ import {
 } from "../../shared/components";
 import { BookCard } from "./BookCard";
 import type { FilterConfig } from "../../shared/components/types";
+import { aiService } from "../../services/api";
+import { bookService } from "../../services/api";
 
 export const BookList: React.FC = () => {
   const navigate = useNavigate();
@@ -26,6 +28,11 @@ export const BookList: React.FC = () => {
     sortBy: "title",
     sortDir: "asc",
   });
+
+  const [useSemanticSearch, setUseSemanticSearch] = useState(false);
+  const [semanticResults, setSemanticResults] = useState<any[]>([]);
+  const [semanticLoading, setSemanticLoading] = useState(false);
+  const [semanticError, setSemanticError] = useState<string | null>(null);
 
   const [deleteDialog, setDeleteDialog] = useState<{
     open: boolean;
@@ -73,14 +80,41 @@ export const BookList: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchBooks(filters));
-  }, [dispatch, filters]);
-
-  const handleSearch = (query: string) => {
-    if (query) {
-      dispatch(searchBooks({ title: query, params: filters }));
-    } else {
+    if (!useSemanticSearch) {
       dispatch(fetchBooks(filters));
+    }
+  }, [dispatch, filters, useSemanticSearch]);
+
+  const handleSearch = async (query: string) => {
+    if (!query) {
+      setUseSemanticSearch(false);
+      setSemanticResults([]);
+      dispatch(fetchBooks(filters));
+      return;
+    }
+
+    if (useSemanticSearch) {
+      // AI Semantic Search
+      try {
+        setSemanticLoading(true);
+        setSemanticError(null);
+        const results = await aiService.semanticSearch(query, 20);
+
+        // Fetch full book details for each result
+        const bookIds = results.value.map((r) => r.bookId);
+        const booksPromises = bookIds.map((id) => bookService.getBookById(id));
+        const booksData = await Promise.all(booksPromises);
+
+        setSemanticResults(booksData);
+      } catch (err: any) {
+        setSemanticError(err.message || "Failed to perform semantic search");
+        setSemanticResults([]);
+      } finally {
+        setSemanticLoading(false);
+      }
+    } else {
+      // Traditional keyword search
+      dispatch(searchBooks({ title: query, params: filters }));
     }
   };
 
@@ -128,7 +162,11 @@ export const BookList: React.FC = () => {
     }
   };
 
-  if (loading) return <LoadingSpinner />;
+  const displayLoading = useSemanticSearch ? semanticLoading : loading;
+  const displayError = useSemanticSearch ? semanticError : error;
+  const displayBooks = useSemanticSearch ? semanticResults : books;
+
+  if (displayLoading) return <LoadingSpinner />;
 
   return (
     <div>
@@ -149,28 +187,75 @@ export const BookList: React.FC = () => {
         </button>
       </div>
 
-      {error && <ErrorDisplay error={error} />}
+      {displayError &&
+        (typeof displayError === "string" ? (
+          <div className="alert alert-danger" role="alert">
+            <i className="bi bi-exclamation-triangle me-2"></i>
+            {displayError}
+          </div>
+        ) : (
+          <ErrorDisplay error={displayError} />
+        ))}
 
       {/* Search & Filter Section */}
       <div className="card mb-4">
         <div className="card-body">
-          <h5 className="card-title mb-3">🔍 Search & Filters</h5>
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <h5 className="card-title mb-0">🔍 Search & Filters</h5>
+
+            {/* AI Search Toggle */}
+            <div className="form-check form-switch">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="semanticSearchToggle"
+                checked={useSemanticSearch}
+                onChange={(e) => setUseSemanticSearch(e.target.checked)}
+              />
+              <label
+                className="form-check-label"
+                htmlFor="semanticSearchToggle"
+              >
+                <i className="bi bi-magic me-1"></i>
+                <strong>AI Semantic Search</strong>
+              </label>
+            </div>
+          </div>
+
+          {/* AI Search Info Banner */}
+          {useSemanticSearch && (
+            <div className="alert alert-info mb-3" role="alert">
+              <i className="bi bi-lightbulb-fill me-2"></i>
+              <strong>AI Search Active:</strong> Searches understand meaning,
+              not just keywords. Try "beginner python tutorial" or "software
+              engineering best practices"
+            </div>
+          )}
+
           <SearchBar
             onSearch={handleSearch}
-            placeholder="Search books by title, author, or ISBN..."
+            placeholder={
+              useSemanticSearch
+                ? "🤖 AI Search: Try 'learn programming' or 'code quality books'..."
+                : "Search books by title, author, or ISBN..."
+            }
           />
-          <div className="mt-3">
-            <FilterPanel
-              filters={filterConfig}
-              onFilterChange={handleFilterChange}
-            />
-          </div>
+
+          {!useSemanticSearch && (
+            <div className="mt-3">
+              <FilterPanel
+                filters={filterConfig}
+                onFilterChange={handleFilterChange}
+              />
+            </div>
+          )}
         </div>
       </div>
 
       {/* Books Grid */}
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 mb-4">
-        {books.map((book) => (
+        {displayBooks.map((book) => (
           <div key={book.id} className="col">
             <BookCard book={book} onDelete={handleDelete} />
           </div>
@@ -178,28 +263,36 @@ export const BookList: React.FC = () => {
       </div>
 
       {/* No Books Message */}
-      {books.length === 0 && !loading && (
+      {displayBooks.length === 0 && !displayLoading && (
         <div className="card text-center py-5">
           <div className="card-body">
-            <h4 className="card-title mb-3">📚 No Books Found</h4>
+            <h4 className="card-title mb-3">
+              {useSemanticSearch
+                ? "🤖 No AI Results Found"
+                : "📚 No Books Found"}
+            </h4>
             <p className="card-text text-muted mb-4">
-              {filters.title
+              {useSemanticSearch
+                ? "No books match your semantic search. Try different keywords or phrases that describe what you're looking for."
+                : filters.title
                 ? "No books match your search criteria. Try adjusting your filters or search terms."
                 : "Your book collection is empty. Start by adding your first book!"}
             </p>
-            <button
-              className="btn btn-primary"
-              onClick={() => navigate("/books/new")}
-            >
-              <i className="bi bi-plus-circle me-2"></i>
-              Add Your First Book
-            </button>
+            {!useSemanticSearch && (
+              <button
+                className="btn btn-primary"
+                onClick={() => navigate("/books/new")}
+              >
+                <i className="bi bi-plus-circle me-2"></i>
+                Add Your First Book
+              </button>
+            )}
           </div>
         </div>
       )}
 
-      {/* Pagination */}
-      {books.length > 0 && (
+      {/* Pagination - Hide for semantic search */}
+      {displayBooks.length > 0 && !useSemanticSearch && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
