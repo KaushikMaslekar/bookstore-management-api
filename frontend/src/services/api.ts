@@ -167,15 +167,11 @@ export const categoryService = {
 };
 
 // AI Service
+// AI Service Types
 export interface BookRecommendation {
   bookId: string;
   title: string;
   score: number;
-}
-
-export interface RecommendationsResponse {
-  value: BookRecommendation[];
-  Count: number;
 }
 
 export interface SemanticSearchResult {
@@ -184,24 +180,21 @@ export interface SemanticSearchResult {
   score: number;
 }
 
-export interface SemanticSearchResponse {
-  value: SemanticSearchResult[];
-  Count: number;
-}
-
 export const aiService = {
   // Get book recommendations based on similarity
+  // Backend returns array directly, not wrapped in {value: [...]}
   getRecommendations: (bookId: string, size: number = 6) =>
     api
-      .get<RecommendationsResponse>(
+      .get<BookRecommendation[]>(
         `/ai/recommendations/book/${bookId}?size=${size}`
       )
       .then((res) => res.data),
 
   // Semantic search - understands meaning, not just keywords
+  // Backend returns array directly, not wrapped in {value: [...]}
   semanticSearch: (query: string, size: number = 10) =>
     api
-      .get<SemanticSearchResponse>(
+      .get<SemanticSearchResult[]>(
         `/ai/semantic-search?q=${encodeURIComponent(query)}&size=${size}`
       )
       .then((res) => res.data),

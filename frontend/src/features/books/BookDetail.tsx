@@ -30,7 +30,8 @@ const BookDetail: React.FC = () => {
         setRecLoading(true);
         try {
           const recResponse = await aiService.getRecommendations(id, 6);
-          setRecommendations(recResponse.value || []);
+          // Backend returns array directly
+          setRecommendations(Array.isArray(recResponse) ? recResponse : []);
         } catch (recError) {
           console.error("Failed to load recommendations:", recError);
           // Don't block the main content if recommendations fail

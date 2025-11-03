@@ -100,15 +100,10 @@ export const BookList: React.FC = () => {
         setSemanticError(null);
         const results = await aiService.semanticSearch(query, 20);
 
-        // Check if results and value exist
-        if (
-          results &&
-          results.value &&
-          Array.isArray(results.value) &&
-          results.value.length > 0
-        ) {
+        // Backend returns array directly (not wrapped in {value: [...]})
+        if (results && Array.isArray(results) && results.length > 0) {
           // Fetch full book details for each result
-          const bookIds = results.value.map((r) => r.bookId);
+          const bookIds = results.map((r) => r.bookId);
           const booksPromises = bookIds.map((id) =>
             bookService.getBookById(id)
           );
